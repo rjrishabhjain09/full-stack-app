@@ -1,0 +1,123 @@
+<div class="container">
+  <h1>Product Management</h1>
+
+  <!-- Form to add a new product --> 
+  <div class="add-product-form">
+    <div class="card-head" (click)="toggleForm()">Add Product <span class="arrow"></span></div>
+    <div class="form-body show-form">
+      <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <div class="form-group">
+          <label>Name</label>
+          <input formControlName="name" class="form-control" />
+          <div *ngIf="productForm.controls['name'].invalid && (productForm.controls['name'].dirty || productForm.controls['name'].touched)" class="error">
+            Name is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input formControlName="description" class="form-control" />
+          <div *ngIf="productForm.controls['description'].invalid && (productForm.controls['description'].dirty || productForm.controls['description'].touched)" class="error">
+            Description is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" formControlName="price" class="form-control" />
+          <div *ngIf="productForm.controls['price'].invalid && (productForm.controls['price'].dirty || productForm.controls['price'].touched)" class="error">
+            Price must be a positive number.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <input formControlName="category" class="form-control" />
+          <div *ngIf="productForm.controls['category'].invalid && (productForm.controls['category'].dirty || productForm.controls['category'].touched)" class="error">
+            Category is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input type="number" formControlName="stock" class="form-control" />
+          <div *ngIf="productForm.controls['stock'].invalid && (productForm.controls['stock'].dirty || productForm.controls['stock'].touched)" class="error">
+            Stock must be a positive number.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="productForm.invalid">Add Product</button>
+        <button type="button" class="btn btn-secondary" (click)="closeAddProduct()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Table to display the list of products -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>${{ product.price }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="editProduct(product)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal to edit a product -->
+  <div class="modal" *ngIf="isShowEditform">
+    <div class="modal-content">
+      <h2>Edit Product</h2>
+      <form [formGroup]="editForm" (ngSubmit)="updateProduct()">
+        <input formControlName="id" type="hidden" />
+        <div class="form-group">
+          <label>Name</label>
+          <input formControlName="name" class="form-control" />
+          <div *ngIf="editForm.controls['name'].invalid && (editForm.controls['name'].dirty || editForm.controls['name'].touched)" class="error">
+            Name is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input formControlName="description" class="form-control" />
+          <div *ngIf="editForm.controls['description'].invalid && (editForm.controls['description'].dirty || editForm.controls['description'].touched)" class="error">
+            Description is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" formControlName="price" class="form-control" />
+          <div *ngIf="editForm.controls['price'].invalid && (editForm.controls['price'].dirty || editForm.controls['price'].touched)" class="error">
+            Price must be a positive number.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <input formControlName="category" class="form-control" />
+          <div *ngIf="editForm.controls['category'].invalid && (editForm.controls['category'].dirty || editForm.controls['category'].touched)" class="error">
+            Category is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input type="number" formControlName="stock" class="form-control" />
+          <div *ngIf="editForm.controls['stock'].invalid && (editForm.controls['stock'].dirty || editForm.controls['stock'].touched)" class="error">
+            Stock must be a positive number.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">Update Product</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
